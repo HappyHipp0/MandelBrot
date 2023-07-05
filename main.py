@@ -1,10 +1,13 @@
-import numpy as np
-from PIL import Image
 import os
+
+from PIL import Image
 
 max_iter = 80
 
-img = Image.new(mode='P', size=(600, 600), color=(150, 237, 137))
+img = Image.new(mode='P', size=(600, 600), color=(22, 88, 73))
+
+colors = [(23, 89, 74), (36, 107, 62), (63, 119, 50), (99, 123, 48), (142, 122, 61), (177, 122, 89),
+          (203, 124, 129), (213, 133, 173), (255, 255, 255), (0, 0, 0)]
 
 
 def mandelBrot(c):
@@ -16,23 +19,27 @@ def mandelBrot(c):
     return n
 
 
+def assign_colors(x, y):
+    global colors
+
+    ranges = [0, 1, 2, 3, 5, 7, 10, 15, 30, 60, max_iter]
+
+    for i in range(len(ranges) - 1):
+        if ranges[i] < mandelBrot(complex(x, y)) <= ranges[i + 1]:
+            print(f'{ranges[i]}------{ranges[i + 1]} == {colors[i]}')
+            return colors[i]
+
+    return None
+
+
 if __name__ == "__main__":
-    for a in range(0, 450):
-        for b in range(0, 500):
+    for a in range(0, 600):
+        for b in range(0, 600):
             x = (a - 300) / 150
             y = (b - 300) / 150
-            if 0 < mandelBrot(complex(x, y)) <= 2:
-                img.putpixel((a, b), (150, 237, 137))
-            if 2 < mandelBrot(complex(x, y)) <= 3:
-                img.putpixel((a, b), (69, 191, 85))
-            if 3 < mandelBrot(complex(x, y)) <= 5:
-                img.putpixel((a, b), (22, 128, 57))
-            if 5 < mandelBrot(complex(x, y)) <= 10:
-                img.putpixel((a, b),(4, 77, 41))
-            if 10 < mandelBrot(complex(x, y)) <= 15:
-                img.putpixel((a, b), (0, 38, 28))
-            if 15 < mandelBrot(complex(x, y)) <= 80:
-                img.putpixel((a, b), (0, 0, 0))
+            color = assign_colors(x, y)
+            if color is not None:
+                img.putpixel((a, b), color)
 
 img.save('output.png')
 os.startfile('output.png')
