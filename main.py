@@ -19,7 +19,7 @@ def mandelBrot(c):
     return n
 
 
-def assign_colors(x, y):
+def assignColors(x, y):
     global colors
 
     ranges = [0, 1, 2, 3, 5, 7, 10, 15, 30, 60, max_iter]
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         for b in range(0, 600):
             x = (a - 300) / 150
             y = (b - 300) / 150
-            color = assign_colors(x, y)
+            color = assignColors(x, y)
             if color is not None:
                 img.putpixel((a, b), color)
 
