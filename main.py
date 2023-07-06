@@ -26,7 +26,6 @@ def assignColors(x, y):
 
     for i in range(len(ranges) - 1):
         if ranges[i] < mandelBrot(complex(x, y)) <= ranges[i + 1]:
-            print(f'{ranges[i]}------{ranges[i + 1]} == {colors[i]}')
             return colors[i]
 
     return None
